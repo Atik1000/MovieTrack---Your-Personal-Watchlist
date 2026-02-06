@@ -25,11 +25,11 @@ export default function MovieDetailsPage() {
     const fetchMovie = async () => {
       setIsLoading(true)
       setError('')
-      
+
       try {
         const data = await getMovieDetails(movieId)
         setMovie(data)
-        
+
         if (user) {
           setIsInWatchlist(checkInWatchlist(user.email, data.id))
         }
@@ -45,7 +45,7 @@ export default function MovieDetailsPage() {
 
   const handleToggleWatchlist = () => {
     if (!user || !movie) return
-    
+
     const result = toggleWatchlistUtil(user.email, movie.id)
     setIsInWatchlist(result.isAdded)
   }
@@ -146,11 +146,10 @@ export default function MovieDetailsPage() {
               <div className="flex gap-4 mb-8">
                 <Button
                   onClick={handleToggleWatchlist}
-                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${
-                    isInWatchlist
+                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${isInWatchlist
                       ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                       : 'bg-secondary/50 text-foreground hover:bg-secondary'
-                  }`}
+                    }`}
                 >
                   <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />
                   {isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}

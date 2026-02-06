@@ -59,7 +59,7 @@ export default function SearchPage() {
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query)
-    
+
     if (!query.trim()) {
       setHasSearched(false)
       loadPopularMovies()
@@ -69,7 +69,7 @@ export default function SearchPage() {
     setIsLoading(true)
     setError('')
     setHasSearched(true)
-    
+
     try {
       const response = await searchMovies(query)
       setMovies(response.results)
@@ -83,7 +83,7 @@ export default function SearchPage() {
 
   const handleToggleWatchlist = (movieId: number) => {
     if (!user) return
-    
+
     const result = toggleWatchlistUtil(user.email, movieId)
     setWatchlist(result.watchlist)
   }
@@ -187,11 +187,10 @@ export default function SearchPage() {
                       </Link>
                       <Button
                         onClick={() => handleToggleWatchlist(movie.id)}
-                        className={`px-3 transition-all ${
-                          isInWatchlist
+                        className={`px-3 transition-all ${isInWatchlist
                             ? 'bg-primary text-primary-foreground hover:bg-primary/90'
                             : 'bg-secondary/50 text-foreground hover:bg-secondary'
-                        }`}
+                          }`}
                       >
                         <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />
                       </Button>

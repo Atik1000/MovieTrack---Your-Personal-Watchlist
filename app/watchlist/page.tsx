@@ -32,10 +32,10 @@ export default function WatchlistPage() {
     const loadWatchlist = async () => {
       setIsLoading(true)
       setError('')
-      
+
       try {
         const watchlistIds = getWatchlist(user.email)
-        
+
         if (watchlistIds.length === 0) {
           setWatchlistMovies([])
           setIsLoading(false)
@@ -56,7 +56,7 @@ export default function WatchlistPage() {
 
   const handleRemoveFromWatchlist = (movieId: number) => {
     if (!user) return
-    
+
     removeFromWatchlistUtil(user.email, movieId)
     setWatchlistMovies(movies => movies.filter(m => m.id !== movieId))
   }
