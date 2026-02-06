@@ -1,27 +1,11 @@
-# 🎬 MovieTrack - Your Personal Movie Watchlist
+#  MovieTrack - Your Personal Movie Watchlist
 
-<div align="center">
-
-A modern, feature-rich movie watchlist application built with **Next.js 16**, featuring real-time movie search, comprehensive movie details, and personalized watchlist management powered by **TMDB API**.
-
-[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
-[![React](https://img.shields.io/badge/React-19-61dafb?logo=react)](https://reactjs.org/)
-[![Jest](https://img.shields.io/badge/Jest-35_tests-green?logo=jest)](https://jestjs.io/)
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://www.docker.com/)
-
-[Live Demo](#) • [Documentation](#) • [Report Bug](#) • [Request Feature](#)
-
-</div>
-
----
 
 ## ⚡ Quick Start
 
 Choose your preferred way to run the application:
 
-### 🚀 Standard Setup (5 minutes)
+###  Standard Setup (5 minutes)
 ```bash
 git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
 cd MovieTrack---Your-Personal-Watchlist
@@ -32,7 +16,7 @@ pnpm dev
 ```
 **→ Open [http://localhost:3000](http://localhost:3000)**
 
-### 🐳 Docker Setup (3 minutes)
+###  Docker Setup (3 minutes)
 ```bash
 git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
 cd MovieTrack---Your-Personal-Watchlist
@@ -41,7 +25,7 @@ docker-compose up app
 ```
 **→ Open [http://localhost:3000](http://localhost:3000)**
 
-### 📦 Using npm or yarn
+###  Using npm or yarn
 ```bash
 # With npm
 npm install && npm run dev
@@ -52,7 +36,7 @@ yarn install && yarn dev
 
 ---
 
-## 📋 Table of Contents
+##  Table of Contents
 
 - [Testing & Deployment](#-testing--deployment)
 - [Features](#-features)
@@ -78,7 +62,7 @@ yarn install && yarn dev
 
 ---
 
-## 🧪 Testing & Deployment
+##  Testing & Deployment
 
 ### **Jest Testing**
 - ✅ **35+ passing tests** covering critical functionality
@@ -102,9 +86,9 @@ yarn install && yarn dev
 
 ---
 
-## ✨ Features
+##  Features
 
-### 🔐 **Authentication System**
+###  **Authentication System**
 - **Mock Email/Password Authentication**: Secure login and signup functionality
 - **Persistent Sessions**: Sessions maintained across browser refreshes using localStorage
 - **Protected Routes**: Authentication required for accessing search, watchlist, and movie details
@@ -112,7 +96,7 @@ yarn install && yarn dev
 - **Email Validation**: Built-in validation with helpful error messages
 - **Logout Functionality**: Easy account switching with secure logout
 
-### 🔍 **Movie Search**
+###  **Movie Search**
 - **Real-Time Search**: Instant movie search powered by TMDB API as you type
 - **Popular Movies**: Discover trending movies on initial page load
 - **Smart Loading States**: Skeleton UI for better perceived performance
@@ -127,7 +111,7 @@ yarn install && yarn dev
 - **Empty State Handling**: Helpful messages when no results are found
 - **Error Recovery**: Graceful error handling with retry options
 
-### 🎥 **Movie Details Page**
+###  **Movie Details Page**
 - **Comprehensive Information Display**:
   - Cinematic backdrop hero images
   - High-resolution poster images
@@ -142,7 +126,7 @@ yarn install && yarn dev
 - **Error Handling**: 404 pages for invalid movie IDs
 - **Fully Responsive**: Optimized layouts for all screen sizes
 
-### 📋 **Personal Watchlist**
+###  **Personal Watchlist**
 - **Per-User Storage**: Each user has their own personal watchlist
 - **Persistent Data**: Movies saved securely in localStorage
 - **Real-Time Sync**: Instant updates when adding or removing movies
@@ -153,7 +137,7 @@ yarn install && yarn dev
 - **Empty State Guidance**: Helpful prompts when watchlist is empty
 - **Protected Access**: Login required to view watchlist
 
-### 🎨 **User Experience & Design**
+###  **User Experience & Design**
 - **Modern UI Design**: Clean, professional interface with shadcn/ui components
 - **Dark Mode Support**: Built-in theme switching capability
 - **Smooth Animations**: 
@@ -167,7 +151,7 @@ yarn install && yarn dev
 - **Accessibility**: Semantic HTML and ARIA labels where appropriate
 - **Error Boundaries**: Graceful error handling throughout the app
 
-### 🧰 **Technical Excellence**
+###  **Technical Excellence**
 - **Type-Safe**: Full TypeScript implementation with strict typing
 - **Service Layer**: Clean abstraction of API calls in `lib/tmdb.ts`
 - **Utility Functions**: Reusable helper functions for watchlist management
@@ -179,7 +163,7 @@ yarn install && yarn dev
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Category | Technologies |
 |----------|-------------|
@@ -195,65 +179,7 @@ yarn install && yarn dev
 | **Runtime** | Node.js 18+ |
 
 ---
-
-## 📁 Project Structure
-
-```
-v0-movie-watchlist-ui/
-├── app/                          # Next.js App Router
-│   ├── page.tsx                  # 🏠 Login/Signup page
-│   ├── layout.tsx                # Root layout with providers
-│   ├── providers.tsx             # Context providers wrapper
-│   ├── globals.css               # Global styles and Tailwind
-│   ├── search/
-│   │   └── page.tsx              # 🔍 Movie search page
-│   ├── watchlist/
-│   │   └── page.tsx              # 📋 User watchlist page
-│   └── movie/
-│       └── [id]/
-│           └── page.tsx          # 🎥 Movie details page (dynamic route)
-│
-├── components/
-│   ├── navigation.tsx            # 🧭 Shared navigation bar
-│   ├── movie-skeleton.tsx        # ⏳ Loading skeleton components
-│   ├── theme-provider.tsx        # 🎨 Dark mode theme provider
-│   └── ui/                       # 🧩 shadcn/ui components
-│       ├── button.tsx
-│       ├── card.tsx
-│       ├── input.tsx
-│       ├── badge.tsx
-│       ├── skeleton.tsx
-│       └── ... (40+ components)
-│
-├── lib/
-│   ├── auth-context.tsx          # 🔐 Authentication context & hooks
-│   ├── tmdb.ts                   # 🎬 TMDB API service layer
-│   ├── watchlist.ts              # 📝 Watchlist management utilities
-│   └── utils.ts                  # 🛠️ General utility functions
-│
-├── hooks/
-│   ├── use-toast.ts              # Toast notification hook
-│   └── use-mobile.tsx            # Mobile detection hook
-│
-├── public/                       # Static assets
-├── styles/                       # Additional styles
-│
-├── .env.local                    # Environment variables (not committed)
-├── .env.local.example            # Environment variables template
-├── next.config.mjs               # Next.js configuration
-├── tailwind.config.ts            # Tailwind CSS configuration
-├── tsconfig.json                 # TypeScript configuration
-├── components.json               # shadcn/ui configuration
-├── package.json                  # Dependencies and scripts
-├── README.md                     # This file
-├── SETUP.md                      # Detailed setup guide
-├── IMPLEMENTATION.md             # Implementation details
-└── QUICKSTART.md                 # Quick start guide
-```
-
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -359,7 +285,7 @@ pnpm start
 
 ---
 
-## 🐳 Docker Setup & Usage
+##  Docker Setup & Usage
 
 ### Prerequisites for Docker
 
@@ -472,47 +398,8 @@ docker-compose up --build app
 docker-compose down -v
 ```
 
----
 
-## 📦 NPM Scripts Reference
-
-### Development Scripts
-
-| Command | Description | When to Use |
-|---------|-------------|-------------|
-| `pnpm dev` | Start development server with hot-reload | Daily development |
-| `pnpm build` | Create optimized production build | Before deployment, testing prod build |
-| `pnpm start` | Run production build locally | Test production build locally |
-| `pnpm lint` | Check code quality with ESLint | Before commits, CI/CD |
-
-### Testing Scripts
-
-| Command | Description | When to Use |
-|---------|-------------|-------------|
-| `pnpm test` | Run all tests once | Quick test run, CI/CD |
-| `pnpm test:watch` | Run tests in watch mode | During development, TDD |
-| `pnpm test:coverage` | Generate coverage report | Check test coverage |
-| `pnpm test:ci` | Run tests in CI mode | CI/CD pipelines |
-
-### Using npm or yarn
-
-If you prefer npm or yarn instead of pnpm:
-
-```bash
-# npm
-npm run dev
-npm run build
-npm test
-
-# yarn
-yarn dev
-yarn build
-yarn test
-```
-
----
-
-## 🔄 Complete Development Workflow
+##  Complete Development Workflow
 
 ### 1. **Initial Setup** (One-time)
 
@@ -595,7 +482,7 @@ docker-compose down
 
 ---
 
-## 🎯 Quick Command Reference
+##  Quick Command Reference
 
 ### Most Common Commands
 
@@ -623,7 +510,7 @@ pnpm lint                                  # Check code quality
 
 ---
 
-## 🔍 Verifying Your Setup
+##  Verifying Your Setup
 
 After setup, verify everything works:
 
@@ -668,7 +555,7 @@ pnpm build
 
 ---
 
-## �📖 Usage Guide
+## Usage Guide
 
 ### 1️⃣ **Authentication**
 
@@ -727,7 +614,7 @@ pnpm build
 
 ---
 
-## 🎯 Key Features Explained
+##  Key Features Explained
 
 ### API Integration (`lib/tmdb.ts`)
 
@@ -837,7 +724,7 @@ Unprotected route:
 
 ---
 
-## 🌐 Environment Variables
+##  Environment Variables
 
 Create a `.env.local` file with the following variable:
 
@@ -852,7 +739,7 @@ NEXT_PUBLIC_TMDB_API_KEY=1234567890abcdef1234567890abcdef
 
 ---
 
-## 🎨 Customization
+## Customization
 
 ### Changing Theme Colors
 
@@ -890,7 +777,7 @@ Edit `/app/search/page.tsx` and `/app/watchlist/page.tsx` to customize the movie
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Issue: "TMDB API key is not configured" error
 
@@ -1015,303 +902,6 @@ pnpm test __tests__/lib/tmdb.test.ts
 
 ---
 
-## 🚀 Deployment
-
-### Deploy on Vercel (Recommended - Zero Config)
-
-**Easiest deployment option for Next.js apps:**
-
-1. Push your code to GitHub
-2. Visit [Vercel](https://vercel.com) and sign in
-3. Click **"New Project"**
-4. Import your GitHub repository
-5. Add environment variable:
-   - Key: `NEXT_PUBLIC_TMDB_API_KEY`
-   - Value: Your TMDB API key
-6. Click **"Deploy"**
-
-**✅ Features:**
-- Automatic deployments on push
-- Preview deployments for PRs
-- Global CDN
-- Serverless functions
-- Zero configuration needed
-
-### Deploy on Netlify
-
-1. Build the project: `pnpm build`
-2. Visit [Netlify](https://netlify.com) and sign in
-3. Drag and drop the `.next` folder
-4. Or connect your GitHub repository
-5. Set environment variables in Netlify dashboard:
-   - `NEXT_PUBLIC_TMDB_API_KEY`
-6. Deploy
-
-### Deploy with Docker
-
-#### Using Docker Hub
-
-```bash
-# 1. Build and tag your image
-docker build -t yourusername/movietrack:latest \
-  --build-arg NEXT_PUBLIC_TMDB_API_KEY=your_key \
-  .
-
-# 2. Push to Docker Hub
-docker login
-docker push yourusername/movietrack:latest
-
-# 3. Pull and run on any server
-docker pull yourusername/movietrack:latest
-docker run -d -p 3000:3000 \
-  -e NEXT_PUBLIC_TMDB_API_KEY=your_key \
-  yourusername/movietrack:latest
-```
-
-#### Deploy to Cloud Platforms
-
-**AWS ECS/Fargate:**
-```bash
-# Push to ECR
-aws ecr get-login-password --region us-east-1 | \
-  docker login --username AWS --password-stdin YOUR_ECR_URL
-
-docker tag movietrack:latest YOUR_ECR_URL/movietrack:latest
-docker push YOUR_ECR_URL/movietrack:latest
-
-# Deploy using ECS task definition
-```
-
-**Google Cloud Run:**
-```bash
-# Build and deploy
-gcloud builds submit --tag gcr.io/PROJECT_ID/movietrack
-gcloud run deploy movietrack \
-  --image gcr.io/PROJECT_ID/movietrack \
-  --platform managed \
-  --set-env-vars NEXT_PUBLIC_TMDB_API_KEY=your_key
-```
-
-**Azure Container Instances:**
-```bash
-# Build and push to ACR
-az acr build --registry myregistry --image movietrack:latest .
-
-# Deploy
-az container create \
-  --resource-group myResourceGroup \
-  --name movietrack \
-  --image myregistry.azurecr.io/movietrack:latest \
-  --environment-variables NEXT_PUBLIC_TMDB_API_KEY=your_key \
-  --dns-name-label movietrack \
-  --ports 3000
-```
-
-### Deploy on VPS (DigitalOcean, Linode, etc.)
-
-```bash
-# 1. SSH into your server
-ssh user@your-server-ip
-
-# 2. Clone repository
-git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
-cd MovieTrack---Your-Personal-Watchlist
-
-# 3. Setup environment
-cp .env.local.example .env.local
-# Edit .env.local with your API key
-
-# 4. Using Docker
-docker-compose up -d app
-
-# OR using PM2 for Node.js
-pnpm install
-pnpm build
-pm2 start npm --name "movietrack" -- start
-
-# 5. Setup Nginx reverse proxy (optional)
-# Configure Nginx to proxy port 80 to 3000
-```
-
-### Deployment Checklist
-
-Before deploying to production:
-
-- [ ] Environment variables configured
-- [ ] Production build tested locally (`pnpm build && pnpm start`)
-- [ ] All tests passing (`pnpm test`)
-- [ ] No console errors or warnings
-- [ ] API key is valid and active
-- [ ] HTTPS/SSL configured (if using custom domain)
-- [ ] Analytics setup (optional)
-- [ ] Error monitoring setup (Sentry, etc.) - optional
-- [ ] Performance monitoring - optional
-
-### Post-Deployment
-
-1. **Test the live app:**
-   - Try authentication flow
-   - Search for movies
-   - Add to watchlist
-   - Test on mobile devices
-
-2. **Monitor:**
-   - Check server logs
-   - Monitor API usage
-   - Watch for errors
-
-3. **Configure Custom Domain** (optional):
-   - Add DNS records
-   - Setup SSL certificate
-   - Update environment variables if needed
-
----
-
-## 🔄 Future Enhancements
-
-- [ ] **OMDb API Integration** - Alternative movie data source
-- [ ] **Advanced Filtering** - Filter by genre, year, rating
-- [ ] **Sorting Options** - Sort by title, date, rating
-- [ ] **Pagination** - Handle large search results efficiently
-- [ ] **Movie Trailers** - Embed YouTube trailers
-- [ ] **Cast & Crew** - Display actors and directors
-- [ ] **User Reviews** - Read and write movie reviews
-- [ ] **Social Sharing** - Share watchlist with friends
-- [ ] **Backend Integration** - Real authentication with database
-- [ ] **Movie Recommendations** - AI-powered suggestions
-- [ ] **Multiple Watchlists** - Create custom categories
-- [ ] **Export/Import** - Backup watchlist data
-- [ ] **Progressive Web App** - Offline support
-- [ ] **Internationalization** - Multi-language support
-
----
-
-## 📚 Documentation
-
-- **[TESTING.md](TESTING.md)** - Complete testing guide with Jest
-- **[DOCKER.md](DOCKER.md)** - Docker deployment guide
-- **[SETUP.md](SETUP.md)** - Detailed setup instructions
-- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Implementation details and architecture
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
-- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Deployment options guide
-- **[TMDB API Docs](https://developers.themoviedb.org/3)** - TMDB API reference
-
----
-
-## 📝 Cheat Sheet
-
-### Essential Commands
-
-```bash
-# Setup
-pnpm install                              # Install dependencies
-cp .env.local.example .env.local         # Setup environment
-pnpm dev                                 # Start development
-
-# Development
-pnpm dev                                 # Start dev server (localhost:3000)
-pnpm test:watch                          # Run tests in watch mode
-pnpm lint                                # Check code quality
-
-# Testing
-pnpm test                                # Run all tests
-pnpm test:coverage                       # Coverage report
-
-# Production
-pnpm build                               # Build for production
-pnpm start                               # Start production server
-
-# Docker
-docker-compose up app                    # Production container
-docker-compose --profile dev up dev      # Dev container with hot-reload
-docker-compose down                      # Stop containers
-
-# Troubleshooting
-rm -rf .next node_modules               # Clean build
-pnpm install                            # Reinstall
-pnpm test -- --clearCache               # Clear test cache
-```
-
-### File Locations
-
-```
-📁 Key Files:
-├── .env.local                  # API keys (create from .env.local.example)
-├── app/page.tsx                # Login/Signup page
-├── app/search/page.tsx         # Movie search
-├── app/watchlist/page.tsx      # Watchlist
-├── app/movie/[id]/page.tsx     # Movie details
-├── lib/tmdb.ts                 # API service
-├── lib/auth-context.tsx        # Authentication
-├── lib/watchlist.ts            # Watchlist logic
-└── components/navigation.tsx   # Nav bar
-```
-
-### Environment Variables
-
-```env
-# Required
-NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
-
-# Get your key at:
-# https://www.themoviedb.org/settings/api
-```
-
-### Quick Links
-
-- **Local Dev**: http://localhost:3000
-- **TMDB API Keys**: https://www.themoviedb.org/settings/api
-- **GitHub Repo**: https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist
-- **Report Issues**: https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist/issues
-
----
-
-## 📚 Documentation
-
-- **[SETUP.md](SETUP.md)** - Detailed setup instructions
-- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Implementation details and architecture
-- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
-- **[TMDB API Docs](https://developers.themoviedb.org/3)** - TMDB API reference
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Please follow these steps:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 📄 License
-
-This project is built as a demonstration application and is available for educational purposes.
-
----
-
-## 🙏 Acknowledgments
-
-- **[TMDB](https://www.themoviedb.org/)** - For providing the comprehensive movie database API
-- **[shadcn/ui](https://ui.shadcn.com/)** - For the beautiful, accessible UI components
-- **[Radix UI](https://www.radix-ui.com/)** - For the headless UI primitives
-- **[Next.js](https://nextjs.org/)** - For the powerful React framework
-- **[Tailwind CSS](https://tailwindcss.com/)** - For the utility-first CSS framework
-- **[Lucide](https://lucide.dev/)** - For the clean, consistent icons
-- **[v0.dev](https://v0.dev/)** - For initial UI generation and inspiration
-
----
-
-## 📧 Contact
-
-**Project Maintainer**: [@Atik1000](https://github.com/Atik1000)
-
-**Repository**: [MovieTrack - Your Personal Watchlist](https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist)
-
----
 
 <div align="center">
 
