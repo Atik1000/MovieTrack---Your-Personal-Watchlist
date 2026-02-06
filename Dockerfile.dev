@@ -1,0 +1,21 @@
+# Development Dockerfile for hot-reloading
+
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Install pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
+# Install dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install
+
+# Copy application files
+COPY . .
+
+# Expose the port
+EXPOSE 3000
+
+# Start development server
+CMD ["pnpm", "dev"]

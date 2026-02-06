@@ -8,10 +8,97 @@ A modern, feature-rich movie watchlist application built with **Next.js 16**, fe
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8?logo=tailwind-css)](https://tailwindcss.com/)
 [![React](https://img.shields.io/badge/React-19-61dafb?logo=react)](https://reactjs.org/)
+[![Jest](https://img.shields.io/badge/Jest-35_tests-green?logo=jest)](https://jestjs.io/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker)](https://www.docker.com/)
 
 [Live Demo](#) • [Documentation](#) • [Report Bug](#) • [Request Feature](#)
 
 </div>
+
+---
+
+## ⚡ Quick Start
+
+Choose your preferred way to run the application:
+
+### 🚀 Standard Setup (5 minutes)
+```bash
+git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
+cd MovieTrack---Your-Personal-Watchlist
+pnpm install
+cp .env.local.example .env.local
+# Add your TMDB API key to .env.local
+pnpm dev
+```
+**→ Open [http://localhost:3000](http://localhost:3000)**
+
+### 🐳 Docker Setup (3 minutes)
+```bash
+git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
+cd MovieTrack---Your-Personal-Watchlist
+echo "NEXT_PUBLIC_TMDB_API_KEY=your_key" > .env
+docker-compose up app
+```
+**→ Open [http://localhost:3000](http://localhost:3000)**
+
+### 📦 Using npm or yarn
+```bash
+# With npm
+npm install && npm run dev
+
+# With yarn
+yarn install && yarn dev
+```
+
+---
+
+## 📋 Table of Contents
+
+- [Testing & Deployment](#-testing--deployment)
+- [Features](#-features)
+- [Tech Stack](#️-tech-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Development Guide](#️-development-guide)
+  - [Running Locally](#running-locally)
+- [Docker Setup & Usage](#-docker-setup--usage)
+  - [Docker Compose](#option-1-docker-compose-easiest)
+  - [Manual Docker](#option-2-manual-docker-commands)
+- [NPM Scripts Reference](#-npm-scripts-reference)
+- [Complete Development Workflow](#-complete-development-workflow)
+- [Quick Command Reference](#-quick-command-reference)
+- [Verifying Your Setup](#-verifying-your-setup)
+- [Usage Guide](#-usage-guide)
+- [All Available Commands](#-all-available-commands)
+- [Environment Variables](#-environment-variables)
+- [Troubleshooting](#-troubleshooting)
+- [Deployment](#-deployment)
+
+---
+
+## 🧪 Testing & Deployment
+
+### **Jest Testing**
+- ✅ **35+ passing tests** covering critical functionality
+- **Test Suites**: API services, watchlist utilities, components
+- **Commands**:
+  - `pnpm test` - Run all tests
+  - `pnpm test:watch` - Watch mode
+  - `pnpm test:coverage` - Coverage report
+- **Coverage**: Core utilities and components tested
+- **Documentation**: See [TESTING.md](TESTING.md) for complete guide
+
+### **Docker Support**
+- ✅ **Production-ready** multi-stage Dockerfile
+- ✅ **Development mode** with hot-reloading
+- ✅ **Docker Compose** for easy orchestration
+- ✅ **Optimized image** (~150MB Alpine-based)
+- **Commands**:
+  - `docker-compose up app` - Production
+  - `docker-compose --profile dev up` - Development
+- **Documentation**: See [DOCKER.md](DOCKER.md) for complete guide
 
 ---
 
@@ -232,7 +319,356 @@ The application will start at **[http://localhost:3000](http://localhost:3000)**
 
 ---
 
-## 📖 Usage Guide
+## �️ Development Guide
+
+### Running Locally
+
+#### **Option 1: Standard Development (Recommended)**
+
+```bash
+# Start the development server
+pnpm dev
+
+# Server will start at http://localhost:3000
+# Hot-reload enabled - changes reflect immediately
+```
+
+**What happens:**
+- Next.js dev server starts with Turbopack
+- Files are watched for changes
+- Browser auto-refreshes on save
+- TypeScript type-checking in background
+
+#### **Option 2: Production Build Locally**
+
+```bash
+# Build the production optimized bundle
+pnpm build
+
+# Start the production server
+pnpm start
+
+# Server runs at http://localhost:3000
+```
+
+**Use this to:**
+- Test production performance
+- Verify build succeeds
+- Check for build-time errors
+- Test optimized bundle
+
+---
+
+## 🐳 Docker Setup & Usage
+
+### Prerequisites for Docker
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed
+- Docker Compose (included with Docker Desktop)
+
+### **Option 1: Docker Compose (Easiest)**
+
+#### Production Mode
+
+```bash
+# Create .env file with your API key
+echo "NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here" > .env
+
+# Build and start the container
+docker-compose up app
+
+# Access at http://localhost:3000
+```
+
+**Features:**
+- Optimized production build (~150MB)
+- Multi-stage Alpine-based image
+- Non-root user for security
+- Health checks enabled
+
+#### Development Mode (with Hot-Reload)
+
+```bash
+# Start development container
+docker-compose --profile dev up dev
+
+# Access at http://localhost:3001
+# Code changes sync with container
+```
+
+**Features:**
+- Hot-reload on file changes
+- Development dependencies included
+- Volume mounting for live sync
+- Ideal for containerized development
+
+### **Option 2: Manual Docker Commands**
+
+#### Build Production Image
+
+```bash
+# Build the Docker image
+docker build -t movietrack:latest \
+  --build-arg NEXT_PUBLIC_TMDB_API_KEY=your_api_key \
+  .
+
+# This creates an optimized ~150MB Alpine-based image
+```
+
+#### Run Production Container
+
+```bash
+# Run the container
+docker run -d \
+  --name movietrack-app \
+  -p 3000:3000 \
+  -e NEXT_PUBLIC_TMDB_API_KEY=your_api_key \
+  movietrack:latest
+
+# Access at http://localhost:3000
+```
+
+#### Useful Docker Commands
+
+```bash
+# View running containers
+docker ps
+
+# View logs
+docker logs movietrack-app
+
+# Follow logs in real-time
+docker logs -f movietrack-app
+
+# Stop container
+docker stop movietrack-app
+
+# Remove container
+docker rm movietrack-app
+
+# Remove image
+docker rmi movietrack:latest
+
+# Enter container shell
+docker exec -it movietrack-app sh
+```
+
+### Docker Compose Commands
+
+```bash
+# Start services in background
+docker-compose up -d app
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+
+# Rebuild and start
+docker-compose up --build app
+
+# Remove volumes
+docker-compose down -v
+```
+
+---
+
+## 📦 NPM Scripts Reference
+
+### Development Scripts
+
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm dev` | Start development server with hot-reload | Daily development |
+| `pnpm build` | Create optimized production build | Before deployment, testing prod build |
+| `pnpm start` | Run production build locally | Test production build locally |
+| `pnpm lint` | Check code quality with ESLint | Before commits, CI/CD |
+
+### Testing Scripts
+
+| Command | Description | When to Use |
+|---------|-------------|-------------|
+| `pnpm test` | Run all tests once | Quick test run, CI/CD |
+| `pnpm test:watch` | Run tests in watch mode | During development, TDD |
+| `pnpm test:coverage` | Generate coverage report | Check test coverage |
+| `pnpm test:ci` | Run tests in CI mode | CI/CD pipelines |
+
+### Using npm or yarn
+
+If you prefer npm or yarn instead of pnpm:
+
+```bash
+# npm
+npm run dev
+npm run build
+npm test
+
+# yarn
+yarn dev
+yarn build
+yarn test
+```
+
+---
+
+## 🔄 Complete Development Workflow
+
+### 1. **Initial Setup** (One-time)
+
+```bash
+# Clone repository
+git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
+cd MovieTrack---Your-Personal-Watchlist
+
+# Install dependencies
+pnpm install
+
+# Setup environment variables
+cp .env.local.example .env.local
+# Edit .env.local and add your TMDB API key
+
+# Verify setup
+pnpm dev
+```
+
+### 2. **Daily Development Workflow**
+
+```bash
+# Start development server
+pnpm dev
+
+# Make your changes...
+
+# Run tests
+pnpm test:watch
+
+# Check linting
+pnpm lint
+
+# Build to verify
+pnpm build
+```
+
+### 3. **Before Committing**
+
+```bash
+# Run all checks
+pnpm lint          # Check code quality
+pnpm test          # Run tests
+pnpm build         # Verify build succeeds
+
+# If all pass:
+git add .
+git commit -m "Your message"
+git push
+```
+
+### 4. **Testing Production Build Locally**
+
+```bash
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
+
+# Visit http://localhost:3000
+# Test all features
+```
+
+### 5. **Docker Development Workflow**
+
+```bash
+# First time setup
+docker-compose up --build app
+
+# For development with hot-reload
+docker-compose --profile dev up dev
+
+# View logs
+docker-compose logs -f
+
+# Stop everything
+docker-compose down
+```
+
+---
+
+## 🎯 Quick Command Reference
+
+### Most Common Commands
+
+```bash
+# Development
+pnpm dev                                    # Start dev server
+
+# Testing
+pnpm test                                   # Run tests
+pnpm test:watch                            # Watch mode
+
+# Production
+pnpm build                                 # Build for production
+pnpm start                                 # Start production server
+
+# Docker
+docker-compose up app                      # Run in Docker
+docker-compose --profile dev up dev        # Docker dev mode
+docker-compose down                        # Stop Docker
+
+# Utilities
+pnpm lint                                  # Check code quality
+./commands.sh                              # View all commands
+```
+
+---
+
+## 🔍 Verifying Your Setup
+
+After setup, verify everything works:
+
+### 1. Check Environment Variables
+```bash
+# Verify .env.local exists
+cat .env.local
+
+# Should show: NEXT_PUBLIC_TMDB_API_KEY=your_key
+```
+
+### 2. Test Development Server
+```bash
+pnpm dev
+
+# Open http://localhost:3000
+# You should see the login page
+```
+
+### 3. Test API Connection
+```bash
+# Sign up with any email
+# After login, you should see popular movies
+# If movies load, API is working!
+```
+
+### 4. Run Tests
+```bash
+pnpm test
+
+# Should show: Test Suites: 4 passed
+#              Tests: 35 passed
+```
+
+### 5. Test Production Build
+```bash
+pnpm build
+
+# Should complete without errors
+# Should show build output with routes
+```
+
+---
+
+## �📖 Usage Guide
 
 ### 1️⃣ **Authentication**
 
@@ -360,15 +796,44 @@ Unprotected route:
 
 ---
 
-## 🔧 Available Scripts
+## 🔧 All Available Commands
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| **Development** | `pnpm dev` | Start development server at localhost:3000 |
-| **Build** | `pnpm build` | Create production build |
-| **Start** | `pnpm start` | Run production build |
-| **Lint** | `pnpm lint` | Run ESLint for code quality |
-| **Type Check** | `pnpm tsc` | Run TypeScript compiler check |
+### Development Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start Next.js development server at localhost:3000 with hot-reload |
+| `pnpm build` | Create optimized production build with standalone output |
+| `pnpm start` | Start production server (requires build first) |
+| `pnpm lint` | Run ESLint to check code quality and style |
+
+### Testing Commands
+
+| Command | Description |
+|---------|-------------|
+| `pnpm test` | Run all Jest tests once |
+| `pnpm test:watch` | Run tests in watch mode (auto-rerun on changes) |
+| `pnpm test:coverage` | Generate and display test coverage report |
+| `pnpm test:ci` | Run tests in CI mode with coverage (for pipelines) |
+
+### Docker Commands
+
+| Command | Description |
+|---------|-------------|
+| `docker-compose up app` | Start production container |
+| `docker-compose --profile dev up dev` | Start development container with hot-reload |
+| `docker-compose down` | Stop and remove containers |
+| `docker-compose logs -f` | Follow container logs |
+| `docker build -t movietrack .` | Build Docker image manually |
+
+### Utility Commands
+
+| Command | Description |
+|---------|-------------|
+| `./commands.sh` | Display all available commands in terminal |
+| `pnpm install` | Install all project dependencies |
+| `pnpm add <package>` | Add a new dependency |
+| `pnpm tsc --noEmit` | Run TypeScript type checking |
 
 ---
 
@@ -427,15 +892,56 @@ Edit `/app/search/page.tsx` and `/app/watchlist/page.tsx` to customize the movie
 
 ## 🐛 Troubleshooting
 
+### Issue: "TMDB API key is not configured" error
+
+**Symptoms:** 
+- Movies not loading
+- Error message in console
+- Blank search results
+
+**Solution:**
+```bash
+# 1. Check if .env.local exists
+ls -la .env.local
+
+# 2. Verify API key is set
+cat .env.local
+# Should show: NEXT_PUBLIC_TMDB_API_KEY=your_actual_key
+
+# 3. Restart development server
+# Press Ctrl+C to stop
+pnpm dev
+
+# 4. Clear browser cache and reload
+```
+
 ### Issue: Movies not loading
 
-**Solution:** Verify your TMDB API key in `.env.local` is correct and the file is in the root directory.
+**Solution:** 
+- Verify your TMDB API key in `.env.local` is correct and the file is in the root directory
+- Ensure the key is prefixed with `NEXT_PUBLIC_`
+- Check that you have an active internet connection
+- Try getting a new API key from TMDB if the current one is invalid
+
+### Issue: "Module not found" errors
+
+**Solution:**
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules pnpm-lock.yaml
+pnpm install
+
+# Clear Next.js cache
+rm -rf .next
+pnpm dev
+```
 
 ### Issue: Build errors
 
 **Solution:** 
 ```bash
-rm -rf .next node_modules
+# Complete cleanup and rebuild
+rm -rf .next node_modules pnpm-lock.yaml
 pnpm install
 pnpm build
 ```
@@ -449,25 +955,215 @@ pnpm tsc --noEmit
 
 ### Issue: Watchlist not persisting
 
-**Solution:** Check browser's localStorage is enabled and not full. Clear old data if needed.
+**Solution:** 
+- Check browser's localStorage is enabled and not full
+- Open DevTools → Application → Local Storage
+- Clear old data if needed
+- Try a different browser
+
+### Issue: Port 3000 already in use
+
+**Solution:**
+```bash
+# Find and kill the process using port 3000
+lsof -ti:3000 | xargs kill -9
+
+# Or use a different port
+pnpm dev -- -p 3001
+```
+
+### Issue: Docker build fails
+
+**Solution:**
+```bash
+# Clean Docker cache
+docker system prune -a
+
+# Rebuild without cache
+docker-compose build --no-cache app
+
+# Check Docker has enough space
+docker system df
+```
+
+### Issue: Tests failing
+
+**Solution:**
+```bash
+# Clear Jest cache
+pnpm test -- --clearCache
+
+# Run tests with verbose output
+pnpm test -- --verbose
+
+# Check specific test file
+pnpm test __tests__/lib/tmdb.test.ts
+```
+
+### Still having issues?
+
+1. Check [GitHub Issues](https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist/issues)
+2. Review the detailed guides:
+   - [SETUP.md](SETUP.md) - Setup instructions
+   - [TESTING.md](TESTING.md) - Testing guide
+   - [DOCKER.md](DOCKER.md) - Docker guide
+3. Create a new issue with:
+   - Your environment (OS, Node version, pnpm version)
+   - Steps to reproduce
+   - Error messages
+   - Screenshots if applicable
 
 ---
 
 ## 🚀 Deployment
 
-### Deploy on Vercel (Recommended)
+### Deploy on Vercel (Recommended - Zero Config)
+
+**Easiest deployment option for Next.js apps:**
 
 1. Push your code to GitHub
-2. Visit [Vercel](https://vercel.com)
-3. Import your repository
-4. Add environment variable `NEXT_PUBLIC_TMDB_API_KEY`
-5. Click **Deploy**
+2. Visit [Vercel](https://vercel.com) and sign in
+3. Click **"New Project"**
+4. Import your GitHub repository
+5. Add environment variable:
+   - Key: `NEXT_PUBLIC_TMDB_API_KEY`
+   - Value: Your TMDB API key
+6. Click **"Deploy"**
+
+**✅ Features:**
+- Automatic deployments on push
+- Preview deployments for PRs
+- Global CDN
+- Serverless functions
+- Zero configuration needed
 
 ### Deploy on Netlify
 
 1. Build the project: `pnpm build`
-2. Deploy the `.next` folder
-3. Set environment variables in Netlify dashboard
+2. Visit [Netlify](https://netlify.com) and sign in
+3. Drag and drop the `.next` folder
+4. Or connect your GitHub repository
+5. Set environment variables in Netlify dashboard:
+   - `NEXT_PUBLIC_TMDB_API_KEY`
+6. Deploy
+
+### Deploy with Docker
+
+#### Using Docker Hub
+
+```bash
+# 1. Build and tag your image
+docker build -t yourusername/movietrack:latest \
+  --build-arg NEXT_PUBLIC_TMDB_API_KEY=your_key \
+  .
+
+# 2. Push to Docker Hub
+docker login
+docker push yourusername/movietrack:latest
+
+# 3. Pull and run on any server
+docker pull yourusername/movietrack:latest
+docker run -d -p 3000:3000 \
+  -e NEXT_PUBLIC_TMDB_API_KEY=your_key \
+  yourusername/movietrack:latest
+```
+
+#### Deploy to Cloud Platforms
+
+**AWS ECS/Fargate:**
+```bash
+# Push to ECR
+aws ecr get-login-password --region us-east-1 | \
+  docker login --username AWS --password-stdin YOUR_ECR_URL
+
+docker tag movietrack:latest YOUR_ECR_URL/movietrack:latest
+docker push YOUR_ECR_URL/movietrack:latest
+
+# Deploy using ECS task definition
+```
+
+**Google Cloud Run:**
+```bash
+# Build and deploy
+gcloud builds submit --tag gcr.io/PROJECT_ID/movietrack
+gcloud run deploy movietrack \
+  --image gcr.io/PROJECT_ID/movietrack \
+  --platform managed \
+  --set-env-vars NEXT_PUBLIC_TMDB_API_KEY=your_key
+```
+
+**Azure Container Instances:**
+```bash
+# Build and push to ACR
+az acr build --registry myregistry --image movietrack:latest .
+
+# Deploy
+az container create \
+  --resource-group myResourceGroup \
+  --name movietrack \
+  --image myregistry.azurecr.io/movietrack:latest \
+  --environment-variables NEXT_PUBLIC_TMDB_API_KEY=your_key \
+  --dns-name-label movietrack \
+  --ports 3000
+```
+
+### Deploy on VPS (DigitalOcean, Linode, etc.)
+
+```bash
+# 1. SSH into your server
+ssh user@your-server-ip
+
+# 2. Clone repository
+git clone https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist.git
+cd MovieTrack---Your-Personal-Watchlist
+
+# 3. Setup environment
+cp .env.local.example .env.local
+# Edit .env.local with your API key
+
+# 4. Using Docker
+docker-compose up -d app
+
+# OR using PM2 for Node.js
+pnpm install
+pnpm build
+pm2 start npm --name "movietrack" -- start
+
+# 5. Setup Nginx reverse proxy (optional)
+# Configure Nginx to proxy port 80 to 3000
+```
+
+### Deployment Checklist
+
+Before deploying to production:
+
+- [ ] Environment variables configured
+- [ ] Production build tested locally (`pnpm build && pnpm start`)
+- [ ] All tests passing (`pnpm test`)
+- [ ] No console errors or warnings
+- [ ] API key is valid and active
+- [ ] HTTPS/SSL configured (if using custom domain)
+- [ ] Analytics setup (optional)
+- [ ] Error monitoring setup (Sentry, etc.) - optional
+- [ ] Performance monitoring - optional
+
+### Post-Deployment
+
+1. **Test the live app:**
+   - Try authentication flow
+   - Search for movies
+   - Add to watchlist
+   - Test on mobile devices
+
+2. **Monitor:**
+   - Check server logs
+   - Monitor API usage
+   - Watch for errors
+
+3. **Configure Custom Domain** (optional):
+   - Add DNS records
+   - Setup SSL certificate
+   - Update environment variables if needed
 
 ---
 
@@ -487,6 +1183,86 @@ pnpm tsc --noEmit
 - [ ] **Export/Import** - Backup watchlist data
 - [ ] **Progressive Web App** - Offline support
 - [ ] **Internationalization** - Multi-language support
+
+---
+
+## 📚 Documentation
+
+- **[TESTING.md](TESTING.md)** - Complete testing guide with Jest
+- **[DOCKER.md](DOCKER.md)** - Docker deployment guide
+- **[SETUP.md](SETUP.md)** - Detailed setup instructions
+- **[IMPLEMENTATION.md](IMPLEMENTATION.md)** - Implementation details and architecture
+- **[QUICKSTART.md](QUICKSTART.md)** - Quick start guide
+- **[DEPLOYMENT.md](DEPLOYMENT.md)** - Deployment options guide
+- **[TMDB API Docs](https://developers.themoviedb.org/3)** - TMDB API reference
+
+---
+
+## 📝 Cheat Sheet
+
+### Essential Commands
+
+```bash
+# Setup
+pnpm install                              # Install dependencies
+cp .env.local.example .env.local         # Setup environment
+pnpm dev                                 # Start development
+
+# Development
+pnpm dev                                 # Start dev server (localhost:3000)
+pnpm test:watch                          # Run tests in watch mode
+pnpm lint                                # Check code quality
+
+# Testing
+pnpm test                                # Run all tests
+pnpm test:coverage                       # Coverage report
+
+# Production
+pnpm build                               # Build for production
+pnpm start                               # Start production server
+
+# Docker
+docker-compose up app                    # Production container
+docker-compose --profile dev up dev      # Dev container with hot-reload
+docker-compose down                      # Stop containers
+
+# Troubleshooting
+rm -rf .next node_modules               # Clean build
+pnpm install                            # Reinstall
+pnpm test -- --clearCache               # Clear test cache
+```
+
+### File Locations
+
+```
+📁 Key Files:
+├── .env.local                  # API keys (create from .env.local.example)
+├── app/page.tsx                # Login/Signup page
+├── app/search/page.tsx         # Movie search
+├── app/watchlist/page.tsx      # Watchlist
+├── app/movie/[id]/page.tsx     # Movie details
+├── lib/tmdb.ts                 # API service
+├── lib/auth-context.tsx        # Authentication
+├── lib/watchlist.ts            # Watchlist logic
+└── components/navigation.tsx   # Nav bar
+```
+
+### Environment Variables
+
+```env
+# Required
+NEXT_PUBLIC_TMDB_API_KEY=your_api_key_here
+
+# Get your key at:
+# https://www.themoviedb.org/settings/api
+```
+
+### Quick Links
+
+- **Local Dev**: http://localhost:3000
+- **TMDB API Keys**: https://www.themoviedb.org/settings/api
+- **GitHub Repo**: https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist
+- **Report Issues**: https://github.com/Atik1000/MovieTrack---Your-Personal-Watchlist/issues
 
 ---
 
