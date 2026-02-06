@@ -11,6 +11,7 @@ import { searchMovies, getPopularMovies, getImageUrl, getGenreNames, Movie } fro
 import { getWatchlist, toggleWatchlist as toggleWatchlistUtil } from '@/lib/watchlist'
 import { Navigation } from '@/components/navigation'
 import { MovieGridSkeleton } from '@/components/movie-skeleton'
+import { toast } from 'sonner'
 
 export default function SearchPage() {
   const router = useRouter()
@@ -81,11 +82,21 @@ export default function SearchPage() {
     }
   }
 
-  const handleToggleWatchlist = (movieId: number) => {
+  const handleToggleWatchlist = (movieId: number, movieTitle: string) => {
     if (!user) return
 
     const result = toggleWatchlistUtil(user.email, movieId)
     setWatchlist(result.watchlist)
+
+    if (result.isAdded) {
+      toast.success('Added to watchlist', {
+        description: `${movieTitle} has been added to your watchlist.`
+      })
+    } else {
+      toast.success('Removed from watchlist', {
+        description: `${movieTitle} has been removed from your watchlist.`
+      })
+    }
   }
 
   if (!user) {
@@ -186,10 +197,10 @@ export default function SearchPage() {
                         </Button>
                       </Link>
                       <Button
-                        onClick={() => handleToggleWatchlist(movie.id)}
+                        onClick={() => handleToggleWatchlist(movie.id, movie.title)}
                         className={`px-3 transition-all ${isInWatchlist
-                            ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                            : 'bg-secondary/50 text-foreground hover:bg-secondary'
+                          ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                          : 'bg-secondary/50 text-foreground hover:bg-secondary'
                           }`}
                       >
                         <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />

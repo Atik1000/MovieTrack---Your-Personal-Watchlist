@@ -10,6 +10,7 @@ import { getWatchlist, removeFromWatchlist as removeFromWatchlistUtil } from '@/
 import { getMoviesByIds, getImageUrl, Movie } from '@/lib/tmdb'
 import { Navigation } from '@/components/navigation'
 import { MovieGridSkeleton } from '@/components/movie-skeleton'
+import { toast } from 'sonner'
 
 export default function WatchlistPage() {
   const router = useRouter()
@@ -54,11 +55,15 @@ export default function WatchlistPage() {
     loadWatchlist()
   }, [user])
 
-  const handleRemoveFromWatchlist = (movieId: number) => {
+  const handleRemoveFromWatchlist = (movieId: number, movieTitle: string) => {
     if (!user) return
 
     removeFromWatchlistUtil(user.email, movieId)
     setWatchlistMovies(movies => movies.filter(m => m.id !== movieId))
+
+    toast.success('Removed from watchlist', {
+      description: `${movieTitle} has been removed from your watchlist.`
+    })
   }
 
   if (!user) {
@@ -148,7 +153,7 @@ export default function WatchlistPage() {
                         </Button>
                       </Link>
                       <Button
-                        onClick={() => handleRemoveFromWatchlist(movie.id)}
+                        onClick={() => handleRemoveFromWatchlist(movie.id, movie.title)}
                         className="px-3 bg-destructive hover:bg-destructive/90 text-destructive-foreground transition-all"
                       >
                         <Heart className="w-5 h-5 fill-current" />

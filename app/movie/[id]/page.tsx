@@ -8,6 +8,7 @@ import { useParams, useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth-context'
 import { getMovieDetails, getImageUrl, Movie } from '@/lib/tmdb'
 import { toggleWatchlist as toggleWatchlistUtil, isInWatchlist as checkInWatchlist } from '@/lib/watchlist'
+import { toast } from 'sonner'
 
 export default function MovieDetailsPage() {
   const params = useParams()
@@ -48,6 +49,16 @@ export default function MovieDetailsPage() {
 
     const result = toggleWatchlistUtil(user.email, movie.id)
     setIsInWatchlist(result.isAdded)
+
+    if (result.isAdded) {
+      toast.success('Added to watchlist', {
+        description: `${movie.title} has been added to your watchlist.`
+      })
+    } else {
+      toast.success('Removed from watchlist', {
+        description: `${movie.title} has been removed from your watchlist.`
+      })
+    }
   }
 
   if (isLoading) {
@@ -147,8 +158,8 @@ export default function MovieDetailsPage() {
                 <Button
                   onClick={handleToggleWatchlist}
                   className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${isInWatchlist
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                      : 'bg-secondary/50 text-foreground hover:bg-secondary'
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'bg-secondary/50 text-foreground hover:bg-secondary'
                     }`}
                 >
                   <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />
