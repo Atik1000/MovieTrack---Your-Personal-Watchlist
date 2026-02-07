@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Search } from 'lucide-react'
+import { Search, Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 import { searchMovies, getPopularMovies, Movie } from '@/lib/tmdb'
 import { Navigation } from '@/components/navigation'
 import { MovieGridSkeleton } from '@/components/movie-skeleton'
@@ -18,25 +19,60 @@ export default function SearchPage() {
   const { data: movies, isLoading, error, loadData, setData } = useMovieLoader<Movie[]>()
   const [searchQuery, setSearchQuery] = useState('')
   const [hasSearched, setHasSearched] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(0)
+  const [isLoadingMore, setIsLoadingMore] = useState(false)
 
   // Load popular movies on mount
   useEffect(() => {
     if (user) {
-      loadData(() => getPopularMovies().then((res) => res.results))
+      loadInitialMovies()
     }
-  }, [user, loadData])
+  }, [user])
+
+  const loadInitialMovies = async () => {
+    const response = await getPopularMovies(1)
+    setData(response.results)
+    setCurrentPage(1)
+    setTotalPages(response.total_pages)
+  }
 
   const handleSearch = async (query: string) => {
     setSearchQuery(query)
 
     if (!query.trim()) {
       setHasSearched(false)
-      loadData(() => getPopularMovies().then((res) => res.results))
+      setCurrentPage(1)
+      loadInitialMovies()
       return
     }
 
     setHasSearched(true)
-    loadData(() => searchMovies(query).then((res) => res.results))
+    setCurrentPage(1)
+    loadData(async () => {
+      const response = await searchMovies(query, 1)
+      setTotalPages(response.total_pages)
+      return response.results
+    })
+  }
+
+  const handleLoadMore = async () => {
+    if (isLoadingMore || currentPage >= totalPages) return
+
+    setIsLoadingMore(true)
+    try {
+      const nextPage = currentPage + 1
+      const response = hasSearched
+        ? await searchMovies(searchQuery, nextPage)
+        : await getPopularMovies(nextPage)
+
+      setData((prev) => [...(prev || []), ...response.results])
+      setCurrentPage(nextPage)
+    } catch (err) {
+      console.error('Error loading more movies:', err)
+    } finally {
+      setIsLoadingMore(false)
+    }
   }
 
   if (!user) {
@@ -76,11 +112,37 @@ export default function SearchPage() {
         {isLoading && <MovieGridSkeleton />}
 
         {!isLoading && movies && movies.length > 0 && (
-          <MoviesGrid
-            movies={movies}
-            watchlist={watchlist}
-            onWatchlistToggle={toggleMovie}
-          />
+          <>
+            <MoviesGrid
+              movies={movies}
+              watchlist={watchlist}
+              onWatchlistToggle={toggleMovie}
+            />
+
+            {/* Pagination Controls */}
+            {currentPage < totalPages && (
+              <div className="mt-12 flex flex-col items-center gap-4">
+                <p className="text-sm text-muted-foreground">
+                  Showing {movies.length} of {totalPages * 20} movies (Page {currentPage} of{' '}
+                  {totalPages})
+                </p>
+                <Button
+                  onClick={handleLoadMore}
+                  disabled={isLoadingMore}
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+                >
+                  {isLoadingMore ? (
+                    <>
+                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      Loading...
+                    </>
+                  ) : (
+                    'Load More Movies'
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
         )}
 
         {/* Empty State */}
