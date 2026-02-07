@@ -437,21 +437,8 @@ pnpm lint
 pnpm build
 ```
 
-### 3. **Before Committing**
 
-```bash
-# Run all checks
-pnpm lint          # Check code quality
-pnpm test          # Run tests
-pnpm build         # Verify build succeeds
-
-# If all pass:
-git add .
-git commit -m "Your message"
-git push
-```
-
-### 4. **Testing Production Build Locally**
+### 3. **Testing Production Build Locally**
 
 ```bash
 # Build for production
@@ -464,7 +451,7 @@ pnpm start
 # Test all features
 ```
 
-### 5. **Docker Development Workflow**
+### 4. **Docker Development Workflow**
 
 ```bash
 # First time setup
