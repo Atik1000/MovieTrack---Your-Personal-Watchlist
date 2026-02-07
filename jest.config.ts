@@ -19,10 +19,24 @@ const config: Config = {
         '**/*.{spec,test}.{js,jsx,ts,tsx}',
     ],
     collectCoverageFrom: [
-        'app/**/*.{js,jsx,ts,tsx}',
-        'components/**/*.{js,jsx,ts,tsx}',
-        'lib/**/*.{js,jsx,ts,tsx}',
-        '!components/ui/**',  // Exclude generated shadcn/ui components
+        // Focus on business logic, not UI rendering
+        'lib/**/*.{js,jsx,ts,tsx}',           // ✅ High priority - business logic
+        'hooks/**/*.{js,jsx,ts,tsx}',         // ✅ High priority - custom hooks
+
+        // UI components (optional coverage)
+        'components/navigation.tsx',           // Test critical navigation
+        'components/movie-card.tsx',          // Test movie card logic
+
+        // Exclude UI-heavy files
+        '!components/ui/**',                  // Exclude shadcn/ui components
+        '!components/theme-provider.tsx',     // Exclude theme provider
+        '!components/movie-skeleton.tsx',     // Exclude loading skeleton
+        '!components/error-alert.tsx',        // Simple display component
+        '!components/movies-grid.tsx',        // Simple wrapper component
+        '!app/**/layout.tsx',                 // Exclude layouts
+        '!app/providers.tsx',                 // Exclude providers
+
+        // Exclude config/types
         '!**/*.d.ts',
         '!**/node_modules/**',
         '!**/.next/**',

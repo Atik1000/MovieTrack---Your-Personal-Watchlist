@@ -1,65 +1,28 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Heart, ArrowLeft, Star, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { useAuth } from '@/lib/auth-context'
 import { getMovieDetails, getImageUrl, Movie } from '@/lib/tmdb'
-import { toggleWatchlist as toggleWatchlistUtil, isInWatchlist as checkInWatchlist } from '@/lib/watchlist'
-import { toast } from 'sonner'
+import { useWatchlistActions } from '@/hooks/use-watchlist-actions'
+import { useMovieLoader } from '@/hooks/use-movie-loader'
+import { useAuth } from '@/lib/auth-context'
 
 export default function MovieDetailsPage() {
   const params = useParams()
   const router = useRouter()
   const { user } = useAuth()
   const movieId = params?.id as string
-  const [movie, setMovie] = useState<Movie | null>(null)
-  const [isInWatchlist, setIsInWatchlist] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState('')
+  const { data: movie, isLoading, error, loadData } = useMovieLoader<Movie>()
+  const { isInWatchlist, toggleMovie } = useWatchlistActions({ userEmail: user?.email })
 
   useEffect(() => {
-    if (!movieId) return
-
-    const fetchMovie = async () => {
-      setIsLoading(true)
-      setError('')
-
-      try {
-        const data = await getMovieDetails(movieId)
-        setMovie(data)
-
-        if (user) {
-          setIsInWatchlist(checkInWatchlist(user.email, data.id))
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load movie details')
-      } finally {
-        setIsLoading(false)
-      }
+    if (movieId) {
+      loadData(() => getMovieDetails(movieId))
     }
-
-    fetchMovie()
-  }, [movieId, user])
-
-  const handleToggleWatchlist = () => {
-    if (!user || !movie) return
-
-    const result = toggleWatchlistUtil(user.email, movie.id)
-    setIsInWatchlist(result.isAdded)
-
-    if (result.isAdded) {
-      toast.success('Added to watchlist', {
-        description: `${movie.title} has been added to your watchlist.`
-      })
-    } else {
-      toast.success('Removed from watchlist', {
-        description: `${movie.title} has been removed from your watchlist.`
-      })
-    }
-  }
+  }, [movieId, loadData])
 
   if (isLoading) {
     return (
@@ -156,14 +119,14 @@ export default function MovieDetailsPage() {
             {user && (
               <div className="flex gap-4 mb-8">
                 <Button
-                  onClick={handleToggleWatchlist}
-                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${isInWatchlist
-                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                    : 'bg-secondary/50 text-foreground hover:bg-secondary'
+                  onClick={() => toggleMovie(movie.id, movie.title)}
+                  className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${isInWatchlist(movie.id)
+                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                      : 'bg-secondary/50 text-foreground hover:bg-secondary'
                     }`}
                 >
-                  <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />
-                  {isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  <Heart className={`w-5 h-5 ${isInWatchlist(movie.id) ? 'fill-current' : ''}`} />
+                  {isInWatchlist(movie.id) ? 'Remove from Watchlist' : 'Add to Watchlist'}
                 </Button>
               </div>
             )}
@@ -175,11 +138,13 @@ export default function MovieDetailsPage() {
                   <h3 className="text-sm font-semibold text-muted-foreground uppercase mb-2">
                     Release Date
                   </h3>
-                  <p className="text-lg">{new Date(movie.release_date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}</p>
+                  <p className="text-lg">
+                    {new Date(movie.release_date).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </p>
                 </div>
               )}
 
