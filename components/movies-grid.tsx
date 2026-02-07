@@ -1,18 +1,5 @@
-/**
- * Movies Grid Component
- * Single Responsibility: Display grid of movies
- * DRY: Eliminates grid duplication
- */
-
-import { Movie } from '@/lib/tmdb'
+import { MoviesGridProps } from '@/types/components'
 import { MovieCard } from './movie-card'
-
-interface MoviesGridProps {
-    movies: Movie[]
-    watchlist: number[]
-    onWatchlistToggle: (movieId: number, movieTitle: string) => void
-    showRemoveButton?: boolean
-}
 
 export function MoviesGrid({
     movies,

@@ -5,10 +5,12 @@ import { Heart, ArrowLeft, Star, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { useParams, useRouter } from 'next/navigation'
-import { getMovieDetails, getImageUrl, Movie } from '@/lib/tmdb'
+import { Movie } from '@/types/movie'
+import { getMovieDetails } from '@/utils/tmdb-api'
+import { getImageUrl } from '@/utils/movie-helpers'
 import { useWatchlistActions } from '@/hooks/use-watchlist-actions'
 import { useMovieLoader } from '@/hooks/use-movie-loader'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/contexts/auth-context'
 
 export default function MovieDetailsPage() {
   const params = useParams()
@@ -121,8 +123,8 @@ export default function MovieDetailsPage() {
                 <Button
                   onClick={() => toggleMovie(movie.id, movie.title)}
                   className={`px-8 py-3 rounded-lg font-semibold transition-all duration-200 flex items-center gap-2 ${isInWatchlist(movie.id)
-                      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-                      : 'bg-secondary/50 text-foreground hover:bg-secondary'
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'bg-secondary/50 text-foreground hover:bg-secondary'
                     }`}
                 >
                   <Heart className={`w-5 h-5 ${isInWatchlist(movie.id) ? 'fill-current' : ''}`} />

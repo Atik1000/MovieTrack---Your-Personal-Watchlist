@@ -6,7 +6,7 @@ import {
     isInWatchlist,
     toggleWatchlist,
     clearWatchlist,
-} from '@/lib/watchlist'
+} from '@/utils/watchlist'
 
 describe('Watchlist Utilities', () => {
     const testEmail = 'test@example.com'

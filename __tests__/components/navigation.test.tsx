@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { Navigation } from '@/components/navigation'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/contexts/auth-context'
 import { usePathname } from 'next/navigation'
 
 // Mock the auth context
-jest.mock('@/lib/auth-context', () => ({
+jest.mock('@/contexts/auth-context', () => ({
     useAuth: jest.fn(),
 }))
 

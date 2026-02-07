@@ -5,9 +5,9 @@ import {
     searchMovies,
     getMovieDetails,
     getPopularMovies,
-    getImageUrl,
-    getGenreNames
-} from '@/lib/tmdb'
+    getMoviesByIds,
+} from '@/utils/tmdb-api'
+import { getImageUrl, getGenreNames } from '@/utils/movie-helpers'
 
 describe('TMDB API Service', () => {
     beforeEach(() => {

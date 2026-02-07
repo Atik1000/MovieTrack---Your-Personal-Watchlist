@@ -3,15 +3,9 @@
 import Link from 'next/link'
 import { Heart } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Movie } from '@/lib/tmdb'
-import { getImageUrl, getGenreNames } from '@/lib/tmdb'
-
-interface MovieCardProps {
-    movie: Movie
-    isInWatchlist?: boolean
-    onWatchlistToggle?: (movieId: number, movieTitle: string) => void
-    showRemoveButton?: boolean
-}
+import { Movie } from '@/types/movie'
+import { MovieCardProps } from '@/types/components'
+import { getImageUrl, getGenreNames } from '@/utils/movie-helpers'
 
 export function MovieCard({
     movie,
@@ -82,8 +76,8 @@ export function MovieCard({
                         <Button
                             onClick={handleWatchlistClick}
                             className={`px-3 transition-all ${isInWatchlist
-                                    ? 'bg-destructive hover:bg-destructive/90 text-destructive-foreground'
-                                    : 'bg-primary hover:bg-primary/90 text-primary-foreground'
+                                ? 'bg-destructive hover:bg-destructive/90 text-destructive-foreground'
+                                : 'bg-primary hover:bg-primary/90 text-primary-foreground'
                                 }`}
                         >
                             <Heart className={`w-5 h-5 ${isInWatchlist ? 'fill-current' : ''}`} />

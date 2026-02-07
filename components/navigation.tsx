@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { Heart, Search as SearchIcon, LogOut, Film } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/contexts/auth-context'
 
 export function Navigation() {
     const { user, logout } = useAuth()

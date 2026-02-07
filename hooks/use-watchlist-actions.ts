@@ -1,13 +1,7 @@
-/**
- * Custom hook for watchlist operations
- * Single Responsibility: Manage watchlist state and actions
- * DRY: Centralizes watchlist logic used across multiple pages
- */
-
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { getWatchlist, toggleWatchlist as toggleWatchlistUtil } from '@/lib/watchlist'
+import { getWatchlist, toggleWatchlist as toggleWatchlistUtil } from '@/utils/watchlist'
 import { toast } from 'sonner'
 
 interface UseWatchlistActionsProps {

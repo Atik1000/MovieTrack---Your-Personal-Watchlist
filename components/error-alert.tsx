@@ -1,6 +1,4 @@
-interface ErrorAlertProps {
-    message: string
-}
+import { ErrorAlertProps } from '@/types/components'
 
 export function ErrorAlert({ message }: ErrorAlertProps) {
     if (!message) return null

@@ -1,9 +1,3 @@
-/**
- * Custom hook for loading movies with error handling
- * Single Responsibility: Handles async movie loading logic
- * DRY: Reusable across different movie loading scenarios
- */
-
 'use client'
 
 import { useState, useCallback } from 'react'
