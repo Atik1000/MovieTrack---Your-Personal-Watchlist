@@ -1,9 +1,8 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Search, Loader2 } from 'lucide-react'
 import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 import { Movie } from '@/types/movie'
 import { searchMovies, getPopularMovies } from '@/utils/tmdb-api'
 import { Navigation } from '@/components/navigation'
@@ -23,6 +22,9 @@ export default function SearchPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [isLoadingMore, setIsLoadingMore] = useState(false)
+
+  // Infinite scroll observer ref
+  const observerTarget = useRef<HTMLDivElement>(null)
 
   // Load popular movies on mount
   useEffect(() => {
@@ -57,7 +59,7 @@ export default function SearchPage() {
     })
   }
 
-  const handleLoadMore = async () => {
+  const handleLoadMore = useCallback(async () => {
     if (isLoadingMore || currentPage >= totalPages) return
 
     setIsLoadingMore(true)
@@ -74,7 +76,30 @@ export default function SearchPage() {
     } finally {
       setIsLoadingMore(false)
     }
-  }
+  }, [isLoadingMore, currentPage, totalPages, hasSearched, searchQuery, setData])
+
+  // Infinite scroll observer
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !isLoadingMore && currentPage < totalPages) {
+          handleLoadMore()
+        }
+      },
+      { threshold: 0.1 }
+    )
+
+    const currentTarget = observerTarget.current
+    if (currentTarget) {
+      observer.observe(currentTarget)
+    }
+
+    return () => {
+      if (currentTarget) {
+        observer.unobserve(currentTarget)
+      }
+    }
+  }, [handleLoadMore, isLoadingMore, currentPage, totalPages])
 
   if (!user) {
     return null
@@ -120,27 +145,24 @@ export default function SearchPage() {
               onWatchlistToggle={toggleMovie}
             />
 
-            {/* Pagination Controls */}
+            {/* Infinite Scroll Trigger */}
             {currentPage < totalPages && (
-              <div className="mt-8 sm:mt-12 flex flex-col items-center gap-3 sm:gap-4">
-                <p className="text-xs sm:text-sm text-center text-muted-foreground px-4">
-                  Showing {movies.length} of {totalPages * 20} movies (Page {currentPage} of{' '}
-                  {totalPages})
+              <div ref={observerTarget} className="mt-8 sm:mt-12 flex flex-col items-center gap-3 py-8">
+                {isLoadingMore && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span className="text-sm">Loading more movies...</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* All movies loaded indicator */}
+            {currentPage >= totalPages && (
+              <div className="mt-8 sm:mt-12 text-center py-4">
+                <p className="text-sm text-muted-foreground">
+                  You've reached the end • {movies.length} movies shown
                 </p>
-                <Button
-                  onClick={handleLoadMore}
-                  disabled={isLoadingMore}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"
-                >
-                  {isLoadingMore ? (
-                    <>
-                      <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
-                      Loading...
-                    </>
-                  ) : (
-                    'Load More Movies'
-                  )}
-                </Button>
               </div>
             )}
           </>
