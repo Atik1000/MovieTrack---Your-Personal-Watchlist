@@ -65,7 +65,7 @@ export default function MovieDetailsPage() {
       </nav>
 
       {/* Hero Section with Poster */}
-      <div className="relative h-96 overflow-hidden bg-secondary">
+      <div className="relative h-64 sm:h-80 md:h-96 overflow-hidden bg-secondary">
         <img
           src={getImageUrl(movie.backdrop_path || movie.poster_path, 'original')}
           alt={movie.title}
@@ -75,11 +75,11 @@ export default function MovieDetailsPage() {
       </div>
 
       {/* Content Section */}
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-24 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 -mt-16 sm:-mt-20 md:-mt-24 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {/* Poster Card */}
-          <div className="md:col-span-1">
-            <div className="rounded-lg overflow-hidden shadow-2xl mb-6">
+          <div className="md:col-span-1 flex justify-center md:block">
+            <div className="rounded-lg overflow-hidden shadow-2xl mb-6 w-full max-w-xs md:max-w-none">
               <img
                 src={getImageUrl(movie.poster_path, 'w500')}
                 alt={movie.title}
@@ -90,7 +90,7 @@ export default function MovieDetailsPage() {
 
           {/* Details */}
           <div className="md:col-span-2">
-            <h1 className="text-4xl md:text-5xl font-bold mb-2 text-balance">{movie.title}</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2 text-balance">{movie.title}</h1>
             {movie.tagline && (
               <p className="text-lg text-muted-foreground italic mb-4">"{movie.tagline}"</p>
             )}
@@ -170,14 +170,14 @@ export default function MovieDetailsPage() {
             </div>
 
             {/* Navigation Links */}
-            <div className="mt-12 flex gap-4">
-              <Link href="/search">
-                <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 bg-transparent">
+            <div className="mt-12 flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <Link href="/search" className="w-full sm:w-auto">
+                <Button variant="outline" className="w-full sm:w-auto border-primary/50 text-primary hover:bg-primary/10 bg-transparent">
                   Continue Searching
                 </Button>
               </Link>
-              <Link href="/watchlist">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+              <Link href="/watchlist" className="w-full sm:w-auto">
+                <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground">
                   View Watchlist
                 </Button>
               </Link>

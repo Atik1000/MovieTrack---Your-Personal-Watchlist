@@ -23,7 +23,7 @@ export function MovieCard({
     }
 
     return (
-        <div className="group bg-card border border-border/20 rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20">
+        <div className="group bg-card border border-border/20 rounded-lg overflow-hidden hover:border-primary/50 transition-all duration-300 hover:shadow-xl hover:shadow-primary/20 w-full max-w-sm">
             {/* Poster */}
             <div className="relative h-64 overflow-hidden bg-secondary">
                 <img

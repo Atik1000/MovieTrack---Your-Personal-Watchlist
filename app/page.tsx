@@ -51,18 +51,18 @@ export default function AuthPage() {
       <div className="absolute top-0 left-0 w-80 h-80 bg-accent/10 rounded-full blur-3xl -z-10"></div>
       <div className="absolute bottom-0 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl -z-10"></div>
 
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md px-4">
         {/* Logo section */}
-        <div className="flex flex-col items-center gap-4 mb-8">
-          <div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary/20 border-2 border-primary/40">
-            <Film className="w-8 h-8 text-primary" />
+        <div className="flex flex-col items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <div className="flex items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/20 border-2 border-primary/40">
+            <Film className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-center text-balance">MovieTrack</h1>
-          <p className="text-muted-foreground text-center">Your personal movie watchlist</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-center text-balance">MovieTrack</h1>
+          <p className="text-sm sm:text-base text-muted-foreground text-center">Your personal movie watchlist</p>
         </div>
 
         {/* Auth card */}
-        <div className="bg-card border border-border/30 rounded-xl p-8 backdrop-blur-sm shadow-xl">
+        <div className="bg-card border border-border/30 rounded-xl p-6 sm:p-8 backdrop-blur-sm shadow-xl">
           <h2 className="text-2xl font-bold mb-6 text-center">
             {isLogin ? 'Welcome Back' : 'Create Account'}
           </h2>

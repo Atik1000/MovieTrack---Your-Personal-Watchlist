@@ -86,24 +86,24 @@ export default function SearchPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {/* Welcome Section */}
-        <div className="mb-12">
-          <h2 className="text-3xl font-bold mb-2 text-balance">
+        <div className="mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-2 text-balance">
             Welcome, {user.email.split('@')[0]}
           </h2>
-          <p className="text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             {hasSearched ? 'Search Results' : 'Discover popular movies'}
           </p>
         </div>
 
         {/* Search Bar */}
-        <div className="mb-12">
+        <div className="mb-8 sm:mb-12">
           <div className="relative">
-            <Search className="absolute left-4 top-3.5 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-3 sm:left-4 top-3 sm:top-3.5 w-5 h-5 text-muted-foreground" />
             <Input
               placeholder="Search movies..."
               value={searchQuery}
               onChange={(e) => handleSearch(e.target.value)}
-              className="pl-12 py-6 bg-card border-border/30 text-foreground placeholder:text-muted-foreground/60 text-lg rounded-lg"
+              className="pl-10 sm:pl-12 py-5 sm:py-6 bg-card border-border/30 text-foreground placeholder:text-muted-foreground/60 text-base sm:text-lg rounded-lg"
             />
           </div>
         </div>
@@ -122,19 +122,19 @@ export default function SearchPage() {
 
             {/* Pagination Controls */}
             {currentPage < totalPages && (
-              <div className="mt-12 flex flex-col items-center gap-4">
-                <p className="text-sm text-muted-foreground">
+              <div className="mt-8 sm:mt-12 flex flex-col items-center gap-3 sm:gap-4">
+                <p className="text-xs sm:text-sm text-center text-muted-foreground px-4">
                   Showing {movies.length} of {totalPages * 20} movies (Page {currentPage} of{' '}
                   {totalPages})
                 </p>
                 <Button
                   onClick={handleLoadMore}
                   disabled={isLoadingMore}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base"
                 >
                   {isLoadingMore ? (
                     <>
-                      <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                      <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
                       Loading...
                     </>
                   ) : (
